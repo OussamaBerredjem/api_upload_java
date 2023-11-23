@@ -132,11 +132,11 @@ public class MainActivity extends AppCompatActivity {
              image = data.getData();
             if (image != null) {
                 try {
-                    //getting bitmap object from uri
-                   // bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), image);
-
-                    //displaying selected image to imageview
-                   // imageView.setImageBitmap(bitmap);
+                   
+                   bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), image);
+                    imageView.setImageBitmap(bitmap);
+                   
+                   // 
 
                     //calling the method uploadBitmap to upload image
                     FILE_PATH = getPathFromUri(image);
