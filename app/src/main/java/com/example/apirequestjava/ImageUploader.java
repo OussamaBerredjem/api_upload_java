@@ -40,7 +40,6 @@ public class ImageUploader {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // Handle the response from the server
                         progressDialog.dismiss();
                         Toast.makeText(context, "Image uploaded successfully", Toast.LENGTH_SHORT).show();
                     }
@@ -62,13 +61,13 @@ public class ImageUploader {
             }
         };
 
-        // Set a retry policy with an extended timeout and more attempts
+       
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(
                 0,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-        // Add the request to the RequestQueue
+        
         queue.add(stringRequest);
     }
 
