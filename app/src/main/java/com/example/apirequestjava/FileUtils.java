@@ -17,17 +17,7 @@ import android.webkit.MimeTypeMap;
 
 import java.io.File;
 
-/**
- * @author Peli
- * @author paulburke (ipaulpro)
- * @version 2013-12-11
- */
 
-/**
- * @edited by Jakub Kučera (Simplex Web Solutions s.r.o.)
- * @website http://simplex.ws
- * @version 18-01-2016
- */
 public class FileUtils {
     public static final String AUTHORITY = "com.ianhanniballake.localstorage.documents";
     public static final String MIME_TYPE_AUDIO = "audio/*";
@@ -36,23 +26,12 @@ public class FileUtils {
     public static final String MIME_TYPE_VIDEO = "video/*";
     public static final String MIME_TYPE_APP = "application/*";
     public static final String HIDDEN_PREFIX = ".";
-    /**
-     * TAG for log messages.
-     */
+=
     static final String TAG = "FileUtils";
     private static final boolean DEBUG = false; // Set to true to enable logging
 
     private FileUtils() {
-    } //private constructor to enforce Singleton pattern
-
-    /**
-     * Gets the extension of a file name, like ".png" or ".jpg".
-     *
-     * @param uri
-     *
-     * @return Extension including the dot("."); "" if there is no extension;
-     * null if uri was null.
-     */
+    } 
     public static String getExtension(String uri) {
         if (uri == null) {
             return null;
@@ -62,22 +41,17 @@ public class FileUtils {
         if (dot >= 0) {
             return uri.substring(dot);
         } else {
-            // No extension.
+            
             return "";
         }
     }
 
-    /**
-     * @return True if Uri is a MediaStore Uri.
-     * @author paulburke
-     */
+   
     public static boolean isMediaUri(Uri uri) {
         return "media".equalsIgnoreCase(uri.getAuthority());
     }
 
-    /**
-     * @return The MIME type for the given file.
-     */
+   
     public static String getMimeType(File file) {
 
         String extension = getExtension(file.getName());
@@ -88,75 +62,38 @@ public class FileUtils {
         return "application/octet-stream";
     }
 
-    /**
-     * @return The MIME type for the give Uri.
-     */
+   
     public static String getMimeType(Context context, Uri uri) {
         File file = new File(getPath(context, uri));
         return getMimeType(file);
     }
 
-    /**
-     * @param uri The Uri to check.
-     *
-     * @return Whether the Uri authority is {AUTHORITY}.
-     * @author paulburke
-     */
+    
     public static boolean isLocalStorageDocument(Uri uri) {
         return AUTHORITY.equals(uri.getAuthority());
     }
 
-    /**
-     * @param uri The Uri to check.
-     *
-     * @return Whether the Uri authority is ExternalStorageProvider.
-     * @author paulburke
-     */
+
     public static boolean isExternalStorageDocument(Uri uri) {
         return "com.android.externalstorage.documents".equals(uri.getAuthority());
     }
 
-    /**
-     * @param uri The Uri to check.
-     *
-     * @return Whether the Uri authority is DownloadsProvider.
-     * @author paulburke
-     */
+
     public static boolean isDownloadsDocument(Uri uri) {
         return "com.android.providers.downloads.documents".equals(uri.getAuthority());
     }
 
-    /**
-     * @param uri The Uri to check.
-     *
-     * @return Whether the Uri authority is MediaProvider.
-     * @author paulburke
-     */
+
     public static boolean isMediaDocument(Uri uri) {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
 
-    /**
-     * @param uri The Uri to check.
-     *
-     * @return Whether the Uri authority is Google Photos.
-     */
+
     public static boolean isGooglePhotosUri(Uri uri) {
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
 
-    /**
-     * Get the value of the data column for this Uri. This is useful for
-     * MediaStore Uris, and other file-based ContentProviders.
-     *
-     * @param context       The context.
-     * @param uri           The Uri to query.
-     * @param selection     (Optional) Filter used in the query.
-     * @param selectionArgs (Optional) Selection arguments used in the query.
-     *
-     * @return The value of the _data column, which is typically a file path.
-     * @author paulburke
-     */
+
     public static String getDataColumn(Context context, Uri uri, String selection,
                                        String[] selectionArgs) {
 
@@ -183,19 +120,7 @@ public class FileUtils {
         return null;
     }
 
-    /**
-     * Get a file path from a Uri. This will get the the path for Storage Access
-     * Framework Documents, as well as the _data field for the MediaStore and
-     * other file-based ContentProviders.<br>
-     * <br>
-     * Callers should check whether the path is local before assuming it
-     * represents a local file.
-     *
-     * @param context The context.
-     * @param uri     The Uri to query.
-     *
-     * @author paulburke
-     */
+
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public static String getPath(final Context context, final Uri uri) {
 
@@ -212,14 +137,14 @@ public class FileUtils {
 
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
 
-        // DocumentProvider
+       
         if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
-            // LocalStorageProvider
+          
             if (isLocalStorageDocument(uri)) {
-                // The path is the id
+                
                 return DocumentsContract.getDocumentId(uri);
             }
-            // ExternalStorageProvider
+           
             else if (isExternalStorageDocument(uri)) {
                 final String docId = DocumentsContract.getDocumentId(uri);
                 final String[] split = docId.split(":");
@@ -263,7 +188,7 @@ public class FileUtils {
                 return getDataColumn(context, contentUri, selection, selectionArgs);
             }
         }
-        // MediaStore (and general)
+        
         else if ("content".equalsIgnoreCase(uri.getScheme())) {
 
             // Return the remote address
@@ -281,17 +206,7 @@ public class FileUtils {
     }
 
 
-    /**
-     * Attempt to retrieve the thumbnail of given Uri from the MediaStore. This
-     * should not be called on the UI thread.
-     *
-     * @param context
-     * @param uri
-     * @param mimeType
-     *
-     * @return
-     * @author paulburke
-     */
+
     public static Bitmap getThumbnail(Context context, Uri uri, String mimeType) {
         if (DEBUG)
             Log.d(TAG, "Attempting to get thumbnail");
